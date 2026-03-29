@@ -1,118 +1,120 @@
 # Reinforcement Learning Fundamentals
-## Multi-Armed Bandits and Q-Learning from Scratch
 
-This project explores two core reinforcement learning ideas through clean Python implementations and interpretable experiments:
+Multi-armed bandits and Q-learning built from scratch to compare exploration strategies and learn navigation policies in a grid world.
 
-- **Multi-Armed Bandits** for exploration vs. exploitation
-- **Q-Learning** for sequential decision-making in a grid world
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![NumPy](https://img.shields.io/badge/NumPy-Used-lightgrey)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-Visualization-orange)
+![Best Bandit Strategy](https://img.shields.io/badge/Best%20Bandit-Decaying%20%CE%B5--Greedy-success)
+![Top Result](https://img.shields.io/badge/Best%20Clicks-723.1-brightgreen)
 
-The goal was to move beyond theory and show how reinforcement learning behaves in practical settings, with clear experiments, visualizations, and takeaways.
+## Overview
 
-## Project Overview
+This project explores two core reinforcement learning problems through simple, from-scratch implementations.
 
-This notebook is split into two parts.
+The first part uses a **multi-armed bandit** setup to model digital ad selection. The goal is to balance exploration and exploitation when the true click-through rates are unknown. Several action-selection strategies are compared over 10,000 impressions.
 
-### 1) Multi-Armed Bandits: Digital Ad Optimization
-A simulated advertising setting is used to compare action-selection strategies when the true click-through rates are unknown. Each impression creates a tradeoff between:
+The second part uses **Q-learning** in a 5×5 grid world. A warehouse robot learns how to reach a goal state while avoiding obstacles. This part focuses on reward-driven learning, convergence behavior, and the effect of hyperparameters.
 
-- **exploration**: trying different ads to learn more
-- **exploitation**: favoring the ad that currently looks best
+**Top result:** Decaying ε-Greedy achieved the strongest bandit performance with **723.1 average clicks** across 50 runs.
 
-Strategies implemented from scratch:
+## Project Highlights
+
+- Implemented reinforcement learning algorithms from scratch
+- Compared multiple exploration strategies in a finite-horizon bandit problem
+- Trained and evaluated a tabular Q-learning agent in a grid world
+- Tested how hyperparameters changed learning behavior
+- Visualized both learning curves and the final learned policy
+
+## Methods
+
+### Part 1: Multi-Armed Bandits
+Strategies implemented:
 - Random baseline
-- ε-Greedy
+- ε-Greedy with fixed exploration
 - Decaying ε-Greedy
 - UCB (Upper Confidence Bound)
 
-### 2) Q-Learning: Warehouse Grid Navigation
-A tabular Q-learning agent learns to move through a 5×5 warehouse grid from start to goal while avoiding blocked cells. This part focuses on:
+The bandit scenario represents a digital advertising problem with 5 ads and unknown click-through rates.
 
-- learning from reward and repeated interaction
-- how hyperparameters affect training behavior
-- how a learned policy can be inspected visually, not just numerically
+### Part 2: Q-Learning in Grid World
+A tabular Q-learning agent was trained to navigate a warehouse-style 5×5 grid:
+- Start state: `(0, 0)`
+- Goal state: `(4, 4)`
+- Obstacles: `(1, 1), (1, 3), (2, 2), (3, 1)`
+
+Four hyperparameter settings were compared to see how learning changed under different values of alpha, gamma, and epsilon.
+
+## Results
+
+### Bandit Experiment
+Average clicks over 50 runs:
+- Random: **444.2**
+- ε-Greedy (ε = 0.01): **572.6**
+- ε-Greedy (ε = 0.1): **714.8**
+- ε-Greedy (ε = 0.3): **680.5**
+- Decaying ε-Greedy: **723.1**
+- UCB (c = 2.0): **515.9**
+
+**Takeaway:** A decaying exploration strategy performed best in this finite campaign setting. It explored early, then exploited more confidently later.
+
+### Q-Learning Experiment
+Final 100-episode averages:
+- Baseline: **89.73 reward**, **10.10 steps**
+- High alpha: **89.09 reward**, **10.29 steps**
+- Low gamma: **89.53 reward**, **10.03 steps**
+- Low epsilon: **91.56 reward**, **8.63 steps**
+
+**Takeaway:** Lower exploration produced the best final performance in this environment. The learned policy was more direct and efficient.
 
 ## Why This Project Matters
 
-This notebook shows two different reinforcement learning problem types:
+This project shows the difference between two reinforcement learning settings:
 
-- **Bandits** are useful when decisions are immediate and feedback comes quickly.
-- **Q-learning** is useful when decisions are connected across time and early choices affect later outcomes.
+- **Bandits** are useful when each decision is independent and feedback is immediate
+- **Q-learning** is useful when decisions are connected over time and rewards depend on a full path
 
-That distinction matters in real applications such as ad ranking, recommendations, robotics, navigation, and resource allocation.
+That contrast makes the notebook a strong portfolio piece. It shows both short-horizon optimization and sequential decision-making in one project.
 
-## Key Results
-
-### Bandit Experiment
-- **Decaying ε-Greedy** performed best over a fixed 10,000-impression campaign.
-- Early exploration helped identify the strongest ad.
-- Continued random exploration became expensive later in the run.
-- **UCB** was strong, but did not beat the best ε-based strategy in this setup.
-
-### Q-Learning Experiment
-- The agent improved quickly during early training and then stabilized.
-- A lower exploration rate produced the best final performance in the tested configurations.
-- Hyperparameters changed both convergence speed and policy quality.
-- Visualizing the learned policy helped confirm that the agent found sensible routes around obstacles.
-
-## What’s Included
-
-- reinforcement learning algorithms implemented from scratch
-- experiment design for comparing strategies
-- performance plots and policy visualization
-- interpretation of results in plain language
-- reflection on practical tradeoffs and next steps
-
-## Tools Used
+## Tools
 
 - Python
 - NumPy
 - Pandas
 - Matplotlib
-- Seaborn
 - Jupyter Notebook
 
 ## Repository Structure
 
 ```text
 ReinforcementLearning_portfolio_ready.ipynb   # Main project notebook
-README.md                                     # Project summary
+README.md                                     # Project overview
 ```
 
 ## How to Run
 
-1. Clone the repository.
-2. Open the notebook in Jupyter Notebook or JupyterLab.
-3. Run all cells in order.
+1. Clone the repository
+2. Open the notebook in Jupyter Notebook or JupyterLab
+3. Run all cells in order
 
 Install dependencies if needed:
 
 ```bash
-pip install numpy pandas matplotlib seaborn jupyter
+pip install numpy pandas matplotlib jupyter
 ```
 
-## What I Learned
+## Skills Demonstrated
 
-A few things stood out while building this project:
+- Reinforcement learning fundamentals
+- Experimental design
+- Hyperparameter analysis
+- Data visualization
+- Interpreting model behavior
+- Writing clear technical summaries
 
-- exploration has a real cost in finite-horizon problems
-- hyperparameters shape learning behavior more than they may seem at first
-- good plots matter because they make it easier to see whether the model is learning something useful
-- reinforcement learning is easier to understand when results are tied to realistic scenarios instead of only formulas
+## Future Improvements
 
-## Possible Next Steps
-
-- add **Thompson Sampling** to the bandit comparison
-- compare **Q-Learning** with **SARSA**
-- extend the navigation task to a larger or stochastic environment
-- experiment with a function-approximation or deep RL approach
-
-## Portfolio Value
-
-This project highlights:
-
-- algorithm implementation from scratch
-- experiment design and comparison
-- result interpretation
-- visualization skills
-- the ability to connect technical work to practical decision-making problems
-
+- Add Thompson Sampling to the bandit comparison
+- Compare Q-learning with SARSA
+- Expand the grid world to a stochastic environment
+- Add policy heatmaps or animated training visualizations
